@@ -1,22 +1,22 @@
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
  
 public class Main {
 	
 	static int[] seq;
 	static int[] dp;
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		Scanner in = new Scanner(System.in);
-		
-		int N = in.nextInt();
+		int N = Integer.parseInt(br.readLine());
 		
 		seq = new int[N];
 		dp = new int[N];
 		
-		
-		for(int i = 0; i < N; i++) {
-			seq[i] = in.nextInt();
+		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+        for (int i = 0; i < N; i++) {
+            seq[i] = Integer.parseInt(st.nextToken());
 		}
 		int res = -1;
 		// 0 ~ N-1 까지 모든 부분수열 탐색 
