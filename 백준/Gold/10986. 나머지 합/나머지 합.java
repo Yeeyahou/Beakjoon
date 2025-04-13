@@ -1,34 +1,35 @@
-import java.io.*;
 import java.util.*;
-class Main {
-    static long Comb(long n){
-        if (n < 2)
-            return 0;
-        else
-            return n * (n - 1) / 2;
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+        long res = 0;
+        long num = 0;
+        long[] mod = new long[M]; //나머지 저장할 배열
+
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < N; i++) {
+            num += Integer.parseInt(st.nextToken());
+            mod[(int)(num % M)]++;
+        }
+        
+        res = mod[0];
+        for (int i = 0; i < M; i++) {
+                res += combi(mod[i]);
+        }
+        System.out.println(res);
     }
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
-        st = new StringTokenizer(br.readLine());
-        long[] S = new long[n];
-        int[] M = new int[n];
-        int[] C = new int[m];
-        for (int i = 0; i < n; i++){
-            int num = Integer.parseInt(st.nextToken());
-            if (i == 0)
-                S[i] = num;
-            else
-                S[i] = S[i - 1] + num;
-            M[i] = (int)(S[i] % m);
-            C[M[i]]++;
+    static long combi(long n){
+        if (n < 2) {
+            return 0; 
         }
-        long sum = C[0];
-        for (int i = 0; i < m; i++)
-            sum += Comb(C[i]);
-        System.out.println(sum);
+
+        return (n * (n - 1)) / 2; // nC2 = n * (n - 1) / 2
     }
 }
