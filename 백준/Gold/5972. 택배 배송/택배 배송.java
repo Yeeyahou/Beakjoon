@@ -30,7 +30,7 @@ public class Main {
 
         List<List<Cow>> mainList = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            LinkedList<Cow> list = new LinkedList<>();
+            List<Cow> list = new ArrayList<>();
             mainList.add(list);
         }
         for (int i = 0; i < m; i++) {
