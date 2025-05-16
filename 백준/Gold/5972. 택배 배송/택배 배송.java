@@ -24,7 +24,6 @@ public class Main {
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
 
-        boolean[] visited = new boolean[n];
         int[] distance = new int[n];
         Arrays.fill(distance, Integer.MAX_VALUE);
         distance[0] = 0;
@@ -49,10 +48,6 @@ public class Main {
 
         while (!pq.isEmpty()) {
             Cow nowCow = pq.poll();
-            if (visited[nowCow.num - 1] == true)
-                continue;
-            visited[nowCow.num - 1] = true;
-
             for (Cow cow : mainList.get(nowCow.num - 1)) {
                 int nowDistance = nowCow.distance + cow.distance;
                 if (distance[cow.num - 1] > nowDistance) {
