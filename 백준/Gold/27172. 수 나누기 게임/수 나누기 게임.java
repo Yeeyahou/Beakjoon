@@ -25,6 +25,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
         int n = sToi(br.readLine());
         int[] cards = new int[n+1];
         int[] scores = new int[n+1];
@@ -47,8 +48,9 @@ public class Main {
         }
 
         for (int i = 1; i <= n; i++) {
-            System.out.print(scores[i] + " ");
+            sb.append(scores[i] + " ");
         }
+        System.out.println(sb);
     }
 
     static int sToi(String s) {
