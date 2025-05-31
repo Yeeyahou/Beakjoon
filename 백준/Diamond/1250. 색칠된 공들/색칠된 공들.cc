@@ -69,60 +69,75 @@ int main() {
 	push(p[N] / 100);
 
 	step = 0;
-    for (step = 0; heapSize;) {
-        int cur, ptr, l, r, ll, lm = -1, lr, rl, rm = -1, rr, cl = 0, cr, fl = 1, fr = 1, sl, sr;
-        cur = pop();
-        ptr = p[cur] / 100;
-        color = p[cur] % 100;
-        if (!color) continue; // merged
-        ++step;
-        l = ptr <= cur ? ptr : cur;
-        r = p[l] / 100;
-        if (l <= K && K <= r) break;
-        lr = l - 1;
-        ll = p[lr] / 100;
-        if (p[ll] / 100 < ll) {
-            lm = ll;
-            cl = p[lm] % 100;
-            lr = p[lm] / 100;
-            sl = s[lm];
-        }
-        else {
-            cl = p[ll] % 100;
-            sl = s[ll];
-        }
-        if (!lr || !ll) fl = false;
+	while (heapSize > 0) {
+		int curr = pop();
+		int ptr = p[curr] / 100;
+		int cl = ptr <= curr ? ptr : curr; //현재 블록 왼쪽 인덱스
+		int cr = p[cl] / 100; //현재 블록 오른쪽 인덱스
+		char c = p[curr] % 100; //현재 블록 색
 
-        rl = r + 1;
-        if (rl <= N) {
-            rr = p[rl] / 100;
-            if (p[rr] / 100 ^ rl) {
-                rm = p[rr] / 100;
-                cr = p[rm] % 100;
-                sr = s[rm];
-            }
-            else {
-                cr = p[rl] % 100;
-                sr = s[rl];
-            }
-        }
-        else fr = false;
+		if (!c) continue; //생략 조건
+		step++;
+		if (cl <= K && K <= cr) break; //종료 조건
 
-        if (fl && fr && (cl == cr)) { // merge l + r, push l + r as cur
-            s[cur] = sl + sr;
-            (~lm ? p[lm] : p[ll]) = 0;
-            (~rm ? p[rm] : p[rl]) = 0;
-            p[cur] = ll * 100 + cl;
-            p[ll] = rr * 100;
-            p[rr] = cur * 100;
-            push(cur);
-        }
-        else { // merge l + cur
-            p[cur] = 0;
-            p[r] = (~lm ? lm : ll) * 100;
-            p[ll] = r * 100 + p[ll] % 100;
-        }
-    }
+		int lh = -1, rh = -1; //왼쪽 블록이 병합된 경우의 헤드 인덱스
+		bool lf = true, rf = true; //좌우 블록 유효 플래그
+
+		int lr = cl - 1; //왼쪽 블록 오른쪽 인덱스
+		int ll = p[lr] / 100; //왼쪽 블록 왼쪽 인덱스
+		int ls = s[ll]; //왼쪽 블록 길이
+		char lc = p[ll] % 100; //왼쪽 블록색
+
+		int rl = cr + 1; //오른쪽 블록 왼쪽 인덱스
+		int rr = p[rl] / 100; //오른쪽 블록 오른쪽 인덱스
+		int rs = s[rl]; //오른쪽 블록 길이
+		char rc = p[rl] % 100; //오른쪽 블록색
+
+		//왼쪽 블록 검사
+		if (p[ll] / 100 < ll) { //왼쪽 블록이 병합 된 경우
+			lh = p[ll] / 100;
+			lr = p[lh] / 100;
+			ls = s[lh];
+			lc = p[lh] % 100;
+		}
+
+		if (!ll || !lr) lf = false;
+
+		//오른쪽 블록 검사
+		if (rl > N) {
+			rf = false;
+		}
+		else {
+			if (rl != p[rr] / 100) {
+				rh = p[rr] / 100;
+				rs = s[rh];
+				rc = p[rh] % 100;
+			}
+		}
+
+		//양쪽 블록 색상 같으면 병합
+		if ((lc == rc) && lf && rf) {
+			//기존 헤드를 0가리키도록 (삭제 처리)
+			if (lh == -1) p[ll] = 0;
+			else p[lh] = 0;
+			if (rh == -1) p[rl] = 0;
+			else p[rh] = 0;
+
+			s[curr] = ls + rs;
+			p[curr] = ll * 100 + lc;
+			p[ll] = rr * 100;
+			p[rr] = curr * 100;
+			push(curr);
+		}
+		//양쪽 블록 색이 다르면 왼쪽 블록 범위를 현재 블록이랑 합침(병합 아님)
+		else {
+			p[curr] = 0;
+			if (lh == -1) p[cr] = ll * 100;
+			else p[cr] = lh * 100;
+			p[ll] = cr * 100 + p[ll] % 100;
+
+		}
+	}
 
 	printf("%d", step);
 	return 0;
