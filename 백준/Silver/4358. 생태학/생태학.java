@@ -3,14 +3,13 @@ import java.io.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        Scanner sc = new Scanner(System.in);
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         // 트리맵
         TreeMap<String, Integer> treeMap = new TreeMap<>();
         int total = 0;
-        while (sc.hasNextLine()) {
-            String treeName = sc.nextLine();
-            if (treeName.isEmpty()) break;
+        String treeName;
+        while ((treeName = br.readLine()) != null) {
             treeMap.put(treeName, treeMap.getOrDefault(treeName, 0) + 1);
             total++;
         }
