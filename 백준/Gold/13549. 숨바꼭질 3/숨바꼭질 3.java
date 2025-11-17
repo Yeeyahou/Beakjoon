@@ -1,8 +1,5 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.PriorityQueue;
-import java.util.StringTokenizer;
-import java.util.Arrays;
+import java.io.*;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
