@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
 
 public class Main {
     static long arr[] = new long[10];
@@ -21,7 +20,6 @@ public class Main {
     static void solve(long n) {
         // n의 자릿수 구하기
         int digit = String.valueOf(n).length();
-        long res = 0;
         long dNum = 1; // 1, 10, 100, 1000...등의 자리의 기준 수
         for (int i = 0; i < digit; i++) {
             // step 1
@@ -37,15 +35,9 @@ public class Main {
                 arr[j] += dNum;
             }
             // step 3
-            //if(((int)tmp)%10 !=0)
                 arr[(int)tmp] += (n % dNum + 1);
-            
-            // 0은 맨 앞자리에 올 수 없음 (일의 자리 제외)
-            // if( i != 0)
-            //      arr[0] -= dNum/10 -1;
             
             dNum *= 10;
         }
-        //arr[0]--;
     }
 }
