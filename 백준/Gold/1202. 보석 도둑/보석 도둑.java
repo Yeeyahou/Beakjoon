@@ -47,7 +47,6 @@ public class Main {
 
         @Override
         public int compareTo(Bosuck o) {
-            if (this.m == o.m) return o.v - this.v; // 무게 같으면 가격 내림차순
             return this.m - o.m; // 무게 오름차순
         }
     }
