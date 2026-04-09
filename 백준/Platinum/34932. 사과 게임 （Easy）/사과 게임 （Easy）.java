@@ -30,7 +30,6 @@ public class Main {
         for (int s = 0; s < N; s++) {
             long value = doubled[s];
 
-            // For odd length, each mirrored pair contributes the absolute gap.
             for (int i = 1; i <= half; i++) {
                 long left = doubled[s + i];
                 long right = doubled[s + N - i];
